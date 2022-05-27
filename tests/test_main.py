@@ -30,7 +30,7 @@ def test_api_locally_post_positive_example():
         'native-country': 'United-States',
     }
     client = TestClient(app)
-    response = client.post("/", data=json.dumps(positive_example))
+    response = client.post("/predict", data=json.dumps(positive_example))
     assert 200 == response.status_code
     assert {'Income': '> 50k'} == response.json()
 
@@ -53,7 +53,7 @@ def test_api_locally_post_negative_example():
         'native-country': 'United-States'
     }
     client = TestClient(app)
-    response = client.post("/", data=json.dumps(negative_example))
+    response = client.post("/predict", data=json.dumps(negative_example))
     assert 200 == response.status_code
     assert {'Income': '<= 50k'} == response.json()
 

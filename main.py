@@ -62,7 +62,7 @@ async def greeting():
     return {"greeting": "Hello!"}
 
 
-@app.post("/")
+@app.post("/predict")
 async def predict(features: Features):
     df = pd.DataFrame([features.dict(by_alias=True)])
     x, _, _, _ = process_data(df, categorical_features=cat_features, training=False, encoder=encoder, lb=lb)

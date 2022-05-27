@@ -48,7 +48,7 @@ def get(url):
 
 
 def inference_post(data):
-    status_code, text = post(URL, data)
+    status_code, text = post(URL + "/predict", data)
     print('Status code:', status_code)
     print('Result:', text)
 
