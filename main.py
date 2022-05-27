@@ -35,20 +35,20 @@ cat_features = [
 
 
 class Features(BaseModel):
-    age: int
-    workclass: str
-    fnlgt: int
-    education: str
-    education_num: int = Field(alias="education-num")
-    marital_status: str = Field(alias="marital-status")
-    occupation: str
-    relationship: str
-    race: str
-    sex: str
-    capital_gain: int = Field(alias="capital-gain")
-    capital_loss: int = Field(alias="capital-loss")
-    hours_per_week: int = Field(alias="hours-per-week")
-    native_country: str = Field(alias="native-country")
+    age: int = Field(example=42)
+    workclass: str = Field(example="Private")
+    fnlgt: int = Field(example=111483)
+    education: str = Field(example="Bachelors")
+    education_num: int = Field(example=13, alias="education-num")
+    marital_status: str = Field(example="Married-civ-spouse", alias="marital-status")
+    occupation: str = Field(example="Tech-support")
+    relationship: str = Field(example="Husband")
+    race: str = Field(example="White")
+    sex: str = Field(example="Male")
+    capital_gain: int = Field(example=0, alias="capital-gain")
+    capital_loss: int = Field(example=0, alias="capital-loss")
+    hours_per_week: int = Field(example=50, alias="hours-per-week")
+    native_country: str = Field(example="United-States", alias="native-country")
 
 
 @app.get("/")

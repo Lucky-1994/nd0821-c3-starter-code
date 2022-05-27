@@ -1,4 +1,3 @@
-import os
 import pickle
 
 from sklearn.ensemble import RandomForestClassifier
