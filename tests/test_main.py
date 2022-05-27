@@ -32,7 +32,7 @@ def test_api_locally_post_positive_example():
     client = TestClient(app)
     response = client.post("/", data=json.dumps(positive_example))
     assert 200 == response.status_code
-    assert {'prediction': 1} == response.json()
+    assert {'Income': '> 50k'} == response.json()
 
 
 def test_api_locally_post_negative_example():
@@ -55,5 +55,5 @@ def test_api_locally_post_negative_example():
     client = TestClient(app)
     response = client.post("/", data=json.dumps(negative_example))
     assert 200 == response.status_code
-    assert {'prediction': 0} == response.json()
+    assert {'Income': '<= 50k'} == response.json()
 

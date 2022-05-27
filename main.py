@@ -61,4 +61,8 @@ async def predict(features: Features):
     df = pd.DataFrame([features.dict(by_alias=True)])
     x, _, _, _ = process_data(df, categorical_features=cat_features, training=False, encoder=encoder, lb=lb)
     prediction = inference(model, x).tolist()[0]
-    return {"prediction": prediction}
+    if prediction == 0:
+        prediction = "<= 50k"
+    else:
+        prediction = "> 50k"
+    return {"Income": prediction}
