@@ -9,7 +9,7 @@ import pathlib
 import pandas as pd
 from starter.ml.data import process_data
 from starter.ml.model import build_metrics_string, compute_model_metrics, compute_model_metrics_on_slices, \
-    inference, save_model, train_model
+    inference, save_pickle, train_model
 
 # Add code to load in the data.
 
@@ -51,5 +51,12 @@ print(build_metrics_string(precision_test, recall_test, fbeta_test, prefix="Test
 
 compute_model_metrics_on_slices(model, test, cat_features, encoder, lb)
 
-model_path = os.path.join(pathlib.Path(__file__).parent.parent, "model", "model.pkl")
-save_model(model_path, model, encoder, lb)
+model_folder_path = os.path.join(pathlib.Path(__file__).parent.parent, "model")
+
+model_path = os.path.join(model_folder_path, "model.pkl")
+encoder_path = os.path.join(model_folder_path, "encoder.pkl")
+lb_path = os.path.join(model_folder_path, "lb.pkl")
+
+save_pickle(model_path, model)
+save_pickle(encoder_path, encoder)
+save_pickle(lb_path, lb)

@@ -8,12 +8,19 @@ from pydantic import BaseModel, Field
 
 # Instantiate the app.
 from starter.ml.data import process_data
-from starter.ml.model import inference, load_model
+from starter.ml.model import inference, load_pickle
 
 app = FastAPI()
 
-model_path = os.path.join(pathlib.Path(__file__).parent, "model", "model.pkl")
-model, encoder, lb = load_model(model_path)
+model_folder_path = os.path.join(pathlib.Path(__file__).parent, "model")
+
+model_path = os.path.join(model_folder_path, "model.pkl")
+encoder_path = os.path.join(model_folder_path, "encoder.pkl")
+lb_path = os.path.join(model_folder_path, "lb.pkl")
+
+model = load_pickle(model_path)
+encoder = load_pickle(encoder_path)
+lb = load_pickle(lb_path)
 
 cat_features = [
     "workclass",

@@ -1,3 +1,4 @@
+import os
 import pickle
 
 from sklearn.ensemble import RandomForestClassifier
@@ -110,37 +111,33 @@ def build_metrics_string(precision, recall, fbeta, prefix=""):
     return prefix + f"Precision: {round(precision, 2)} \t\tRecall: {round(recall, 2)} \t F1 Score: {round(fbeta, 2)}"
 
 
-def save_model(model_path, model, encoder, lb):
+def save_pickle(file_path, obj):
     """Save a model and other necessary components in the desired path
 
     Parameters
     ----------
-    model_path: path to save the model in
-    model: trained model
-    encoder: fitted encoder
-    lb: fitted label binarizer
+    file_path: path to save the object in
+    obj: Object that shall be saved as pickle
 
     Returns
     -------
     None
     """
-    with open(model_path, 'wb') as f:
-        pickle.dump([model, encoder, lb], f)
+    with open(file_path, 'wb') as f:
+        pickle.dump(obj, f)
 
 
-def load_model(model_path):
-    """Load a saved model and other necessary components
+def load_pickle(file_path):
+    """Load a pickled object and return it
 
     Parameters
     ----------
-    model_path: path to the saved model
+    file_path: path to the pickled object
 
     Returns
     -------
-    model: trained model
-    encoder: fitted encoder
-    lb: fitted label binarizer
+    object
     """
-    with open(model_path, 'rb') as f:
-        model, encoder, lb = pickle.load(f)
-    return model, encoder, lb
+    with open(file_path, 'rb') as f:
+        obj = pickle.load(f)
+    return obj
