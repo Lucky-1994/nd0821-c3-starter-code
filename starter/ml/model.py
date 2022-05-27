@@ -68,7 +68,7 @@ def inference(model, X):
     return predictions
 
 
-def compute_model_metrics_on_slices(model, data, cat_features, encoder, lb):
+def compute_model_metrics_on_slices(model, data, cat_features, encoder, lb, model_folder_path):
     """Print metrics for fixed categorical features
 
     Parameters
@@ -78,20 +78,22 @@ def compute_model_metrics_on_slices(model, data, cat_features, encoder, lb):
     cat_features: list of categorical features
     encoder: encoder
     lb: label binarizer
+    model_folder_path: path for the output file
 
     Returns
     -------
     None
     """
-    for cat_feature in cat_features:
-        for unique_cat in data[cat_feature].unique():
-            data_slice = data[data[cat_feature] == unique_cat]
-            X_slice, y_slice, encoder, lb = process_data(
-                data_slice, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
-            )
-            predictions_slice = inference(model, X_slice)
-            precision, recall, fbeta = compute_model_metrics(y_slice, predictions_slice)
-            print(build_metrics_string(precision, recall, fbeta, prefix=f"Feature: {unique_cat} [{cat_feature}]\n\t"))
+    with open(f"{model_folder_path}/slice_output.txt", "a") as f:
+        for cat_feature in cat_features:
+            for unique_cat in data[cat_feature].unique():
+                data_slice = data[data[cat_feature] == unique_cat]
+                X_slice, y_slice, encoder, lb = process_data(
+                    data_slice, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
+                )
+                predictions_slice = inference(model, X_slice)
+                precision, recall, fbeta = compute_model_metrics(y_slice, predictions_slice)
+                f.write(build_metrics_string(precision, recall, fbeta, prefix=f"\nFeature: {unique_cat} [{cat_feature}]\n\t"))
 
 
 def build_metrics_string(precision, recall, fbeta, prefix=""):

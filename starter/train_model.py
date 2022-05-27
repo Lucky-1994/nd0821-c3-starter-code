@@ -49,9 +49,8 @@ predictions_test = inference(model, X_test)
 precision_test, recall_test, fbeta_test = compute_model_metrics(y_test, predictions_test)
 print(build_metrics_string(precision_test, recall_test, fbeta_test, prefix="Test: \n\t"))
 
-compute_model_metrics_on_slices(model, test, cat_features, encoder, lb)
-
 model_folder_path = os.path.join(pathlib.Path(__file__).parent.parent, "model")
+compute_model_metrics_on_slices(model, test, cat_features, encoder, lb, model_folder_path)
 
 model_path = os.path.join(model_folder_path, "model.pkl")
 encoder_path = os.path.join(model_folder_path, "encoder.pkl")
